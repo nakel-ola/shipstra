@@ -57,7 +57,7 @@ export function HowItWorks() {
               className="flex flex-col items-center space-y-6 animate-fade-in-up"
             >
               <Card
-                className={`p-8 ${step.bgColor} backdrop-blur border-glass-border ${step.borderColor} shadow-glass hover:shadow-glow transition-all duration-500 group`}
+                className={`p-8 ${step.bgColor} backdrop-blur-sm border-glass-border ${step.borderColor} shadow-glass hover:shadow-glow transition-all duration-500 group`}
               >
                 <div className="text-center space-y-4">
                   <div

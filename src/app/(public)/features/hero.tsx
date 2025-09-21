@@ -18,7 +18,7 @@ export function Hero() {
           <div className="space-y-6">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold font-display leading-tight">
               Deploy to your own{" "}
-              <span className="bg-gradient-primary bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]">
+              <span className="bg-gradient-primary bg-clip-text text-transparent animate-gradient-shift bg-size-[200%_auto]">
                 VPS, instantly.
               </span>
             </h1>
@@ -68,7 +68,7 @@ export function Hero() {
 
         {/* Right Column - Terminal Demo */}
         <div className="lg:pl-8 animate-fade-in-up">
-          <Card className="bg-card/50 backdrop-blur border-glass-border shadow-glass">
+          <Card className="bg-card/50 backdrop-blur-sm border-glass-border shadow-glass">
             <div className="p-6 space-y-4">
               {/* Terminal Header */}
               <div className="flex items-center gap-2 pb-4 border-b border-glass-border">

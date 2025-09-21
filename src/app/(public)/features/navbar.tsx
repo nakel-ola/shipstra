@@ -12,7 +12,7 @@ export function Navbar() {
   const { user } = useAuth();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-glass-border backdrop-blur-xl bg-glass/80 supports-[backdrop-filter]:bg-glass/60">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-glass-border backdrop-blur-xl bg-glass/80 supports-backdrop-filter:bg-glass/60">
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">

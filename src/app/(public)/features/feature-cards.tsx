@@ -51,11 +51,11 @@ export function FeatureCards() {
           {features.map((feature, index) => (
             <Card 
               key={feature.title}
-              className={`group relative overflow-hidden bg-card/50 backdrop-blur border-glass-border shadow-glass hover:shadow-glow transition-all duration-500 animate-fade-in-${index + 1}`}
+              className={`group relative overflow-hidden bg-card/50 backdrop-blur-sm border-glass-border shadow-glass hover:shadow-glow transition-all duration-500 animate-fade-in-${index + 1}`}
             >
               <div className="p-6 space-y-4">
                 {/* Icon with gradient background */}
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-12 h-12 rounded-xl bg-linear-to-r ${feature.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <feature.icon className="h-6 w-6 text-white" />
                 </div>
 
@@ -70,7 +70,7 @@ export function FeatureCards() {
               </div>
 
               {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-r from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             </Card>
           ))}
         </div>

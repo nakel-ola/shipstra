@@ -37,7 +37,7 @@ const social = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-glass-border bg-card/20 backdrop-blur">
+    <footer className="border-t border-glass-border bg-card/20 backdrop-blur-sm">
       <div className="container">
         <div className="py-16 grid grid-cols-2 md:grid-cols-5 gap-8">
           {/* Logo and Description */}

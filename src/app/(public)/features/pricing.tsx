@@ -19,7 +19,7 @@ const plans = [
       "Basic monitoring",
     ],
     buttonText: "Start Free",
-    buttonVariant: "outline" as const,
+    buttonVariant: "outline-solid" as const,
     popular: false,
   },
   {
@@ -57,7 +57,7 @@ const plans = [
       "Training sessions",
     ],
     buttonText: "Contact Sales",
-    buttonVariant: "outline" as const,
+    buttonVariant: "outline-solid" as const,
     popular: false,
   },
 ];
@@ -83,7 +83,7 @@ export function Pricing() {
           {plans.map((plan, index) => (
             <Card
               key={plan.name}
-              className={`relative overflow-hidden p-8 bg-card/50 backdrop-blur border-glass-border shadow-glass hover:shadow-glow transition-all duration-500 animate-fade-in-${
+              className={`relative overflow-hidden p-8 bg-card/50 backdrop-blur-sm border-glass-border shadow-glass hover:shadow-glow transition-all duration-500 animate-fade-in-${
                 index + 1
               } ${plan.popular ? "border-primary/50 shadow-glow" : ""}`}
             >
@@ -101,7 +101,7 @@ export function Pricing() {
                 {/* Header */}
                 <div className="space-y-4">
                   <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-r ${
+                    className={`w-12 h-12 rounded-xl bg-linear-to-r ${
                       plan.popular
                         ? "from-primary to-primary-glow"
                         : "from-muted to-accent/20"
@@ -141,7 +141,7 @@ export function Pricing() {
                 <div className="space-y-3">
                   {plan.features.map((feature) => (
                     <div key={feature} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
+                      <Check className="h-5 w-5 text-success mt-0.5 shrink-0" />
                       <span className="text-sm text-muted-foreground">
                         {feature}
                       </span>

@@ -54,7 +54,7 @@ export function CodeExample() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <Card className="overflow-hidden bg-card/50 backdrop-blur border-glass-border shadow-glass">
+          <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-glass-border shadow-glass">
             {/* Tab Headers */}
             <div className="flex border-b border-glass-border bg-muted/20">
               {Object.keys(examples).map((framework) => (
@@ -82,7 +82,7 @@ export function CodeExample() {
                   variant="ghost"
                   size="sm"
                   onClick={handleCopy}
-                  className="bg-background/80 backdrop-blur"
+                  className="bg-background/80 backdrop-blur-sm"
                 >
                   {copied ? (
                     <Check className="h-4 w-4 text-success" />

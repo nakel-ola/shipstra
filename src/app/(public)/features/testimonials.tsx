@@ -51,7 +51,7 @@ export function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <Card
               key={testimonial.author}
-              className={`p-6 bg-card/50 backdrop-blur border-glass-border shadow-glass hover:shadow-glow transition-all duration-500 animate-fade-in-${
+              className={`p-6 bg-card/50 backdrop-blur-sm border-glass-border shadow-glass hover:shadow-glow transition-all duration-500 animate-fade-in-${
                 index + 1
               }`}
             >
