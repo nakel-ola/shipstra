@@ -151,7 +151,7 @@ export function Pricing() {
 
                 {/* CTA Button */}
                 <Button
-                  variant={plan.buttonVariant}
+                  variant={plan.buttonVariant as any}
                   className="w-full"
                   size="lg"
                 >
