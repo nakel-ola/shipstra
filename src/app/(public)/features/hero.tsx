@@ -1,8 +1,6 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Github, ArrowRight, CheckCircle, Terminal } from "lucide-react";
+import { ArrowRight, CheckCircle, Terminal } from "lucide-react";
 
 export function Hero() {
   return (
@@ -37,15 +35,6 @@ export function Hero() {
             >
               Get Started Free
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-glass-border hover:border-primary/50 transition-colors"
-            >
-              <Github className="mr-2 h-5 w-5" />
-              View on GitHub
             </Button>
           </div>
 

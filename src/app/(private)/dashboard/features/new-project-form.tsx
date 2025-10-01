@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
@@ -6,7 +8,15 @@ import { z } from "zod";
 import { Github, Link as LinkIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormDescription,
+} from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useProjects } from "@/hooks/use-projects";
 
@@ -28,7 +38,7 @@ type GitHubFormData = z.infer<typeof githubSchema>;
 type ManualFormData = z.infer<typeof manualSchema>;
 
 interface NewProjectFormProps {
-  type: 'github' | 'manual';
+  type: "github" | "manual";
   onSuccess?: () => void;
 }
 
@@ -37,8 +47,8 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
   const { toast } = useToast();
   const { createProject } = useProjects();
 
-  const schema = type === 'github' ? githubSchema : manualSchema;
-  
+  const schema = type === "github" ? githubSchema : manualSchema;
+
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -52,18 +62,22 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
 
   const onSubmit = async (data: GitHubFormData | ManualFormData) => {
     setIsLoading(true);
-    
+
     try {
       const projectInput = {
         name: data.projectName,
-        repositoryUrl: type === 'github' ? (data as GitHubFormData).repositoryUrl : undefined,
-        sourceUrl: type === 'manual' ? (data as ManualFormData).sourceUrl : undefined,
+        repositoryUrl:
+          type === "github"
+            ? (data as GitHubFormData).repositoryUrl
+            : undefined,
+        sourceUrl:
+          type === "manual" ? (data as ManualFormData).sourceUrl : undefined,
         buildCommand: data.buildCommand,
         outputDirectory: data.outputDirectory,
       };
 
       const result = await createProject(projectInput);
-      
+
       if (result) {
         form.reset();
         onSuccess?.();
@@ -72,7 +86,8 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
       toast({
         variant: "destructive",
         title: "Failed to create project",
-        description: "There was an error creating your project. Please try again.",
+        description:
+          "There was an error creating your project. Please try again.",
       });
     } finally {
       setIsLoading(false);
@@ -90,7 +105,7 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
           {/* Header with icon */}
           <div className="flex items-center gap-3 pb-4 border-b border-glass-border">
             <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-              {type === 'github' ? (
+              {type === "github" ? (
                 <Github className="w-4 h-4 text-primary" />
               ) : (
                 <LinkIcon className="w-4 h-4 text-primary" />
@@ -98,13 +113,12 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
             </div>
             <div>
               <h3 className="font-semibold text-foreground">
-                {type === 'github' ? 'Import from GitHub' : 'Deploy from URL'}
+                {type === "github" ? "Import from GitHub" : "Deploy from URL"}
               </h3>
               <p className="text-sm text-muted-foreground">
-                {type === 'github' 
-                  ? 'Connect your GitHub repository for automatic deployments'
-                  : 'Deploy from any public Git repository or archive URL'
-                }
+                {type === "github"
+                  ? "Connect your GitHub repository for automatic deployments"
+                  : "Deploy from any public Git repository or archive URL"}
               </p>
             </div>
           </div>
@@ -124,7 +138,8 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This will be used as the project identifier and deployment URL.
+                  This will be used as the project identifier and deployment
+                  URL.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -134,16 +149,16 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
           {/* Repository/Source URL */}
           <FormField
             control={form.control}
-            name={type === 'github' ? 'repositoryUrl' : 'sourceUrl'}
+            name={type === "github" ? "repositoryUrl" : "sourceUrl"}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {type === 'github' ? 'GitHub Repository' : 'Source URL'}
+                  {type === "github" ? "GitHub Repository" : "Source URL"}
                 </FormLabel>
                 <FormControl>
                   <Input
                     placeholder={
-                      type === 'github' 
+                      type === "github"
                         ? "https://github.com/username/repository"
                         : "https://github.com/username/repository.git"
                     }
@@ -152,10 +167,9 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
                   />
                 </FormControl>
                 <FormDescription>
-                  {type === 'github' 
-                    ? 'The GitHub repository URL to deploy from.'
-                    : 'Public Git repository or archive URL to deploy from.'
-                  }
+                  {type === "github"
+                    ? "The GitHub repository URL to deploy from."
+                    : "Public Git repository or archive URL to deploy from."}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -209,11 +223,7 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
 
           {/* Submit Button */}
           <div className="flex justify-end gap-3 pt-4">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => form.reset()}
-            >
+            <Button type="button" variant="ghost" onClick={() => form.reset()}>
               Cancel
             </Button>
             <Button
@@ -227,7 +237,7 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
                   Creating...
                 </>
               ) : (
-                'Create Project'
+                "Create Project"
               )}
             </Button>
           </div>

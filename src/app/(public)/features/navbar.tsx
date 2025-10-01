@@ -19,7 +19,7 @@ export function Navbar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary">
             <Zap className="h-4 w-4 text-primary-foreground" />
           </div>
-          <span className="text-xl font-bold font-display">DeployVPS</span>
+          <span className="text-xl font-bold font-display">Shipstra</span>
         </div>
 
         {/* Desktop Navigation */}

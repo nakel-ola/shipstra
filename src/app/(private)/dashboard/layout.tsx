@@ -6,7 +6,7 @@ interface DashboardLayoutProps {
   children: ReactNode;
 }
 
-export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+export default function DashboardLayout ({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Animated background elements */}

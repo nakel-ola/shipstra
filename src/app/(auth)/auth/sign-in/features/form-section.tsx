@@ -61,7 +61,8 @@ export const FormSection = () => {
           title: "Sign in failed",
           description: result.error.message,
         });
-      } else if (result.requires2FA) {
+      } 
+      else if (result.requires2FA) {
         router.push(
           `/auth/verify-2fa?email=${encodeURIComponent(
             data.email
@@ -71,7 +72,8 @@ export const FormSection = () => {
           title: "Two-Factor Authentication Required",
           description: "Please enter your 6-digit verification code.",
         });
-      } else {
+      } 
+      else {
         toast({
           title: "Welcome back!",
           description: "You've been signed in successfully.",

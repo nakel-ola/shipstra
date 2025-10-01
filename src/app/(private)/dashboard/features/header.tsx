@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Bell, User, LogOut, Settings } from "lucide-react";
@@ -64,7 +66,7 @@ export const Header = () => {
       {/* Left section */}
       <div className="flex items-center gap-4">
         <SidebarTrigger className="p-2 hover:bg-glass/50 rounded-lg transition-colors" />
-        
+
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -120,7 +122,7 @@ export const Header = () => {
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
-          
+
           <DropdownMenuContent
             align="end"
             className="w-56 backdrop-blur-xl bg-glass/95 border-glass-border"
@@ -135,21 +137,21 @@ export const Header = () => {
                 </p>
               </div>
             </DropdownMenuLabel>
-            
+
             <DropdownMenuSeparator className="bg-glass-border" />
-            
+
             <DropdownMenuItem className="cursor-pointer hover:bg-glass/50">
               <User className="w-4 h-4 mr-2" />
               Profile
             </DropdownMenuItem>
-            
+
             <DropdownMenuItem className="cursor-pointer hover:bg-glass/50">
               <Settings className="w-4 h-4 mr-2" />
               Settings
             </DropdownMenuItem>
-            
+
             <DropdownMenuSeparator className="bg-glass-border" />
-            
+
             <DropdownMenuItem
               className="cursor-pointer hover:bg-destructive/10 text-destructive"
               onClick={handleSignOut}

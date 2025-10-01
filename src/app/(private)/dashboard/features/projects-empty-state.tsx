@@ -1,8 +1,16 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { FolderOpen, Plus, Github, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { NewProjectForm } from "./new-project-form";
 import { useState } from "react";
@@ -46,7 +54,7 @@ export const ProjectsEmptyState = () => {
               }}
             >
               <FolderOpen className="w-12 h-12 text-primary" />
-              
+
               {/* Floating particles */}
               <motion.div
                 className="absolute top-2 right-2 w-2 h-2 bg-accent rounded-full"
@@ -86,8 +94,8 @@ export const ProjectsEmptyState = () => {
               No projects yet
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              Create your first project to start deploying applications to your VPS. 
-              Connect a GitHub repository or provide a manual URL.
+              Create your first project to start deploying applications to your
+              VPS. Connect a GitHub repository or provide a manual URL.
             </p>
           </motion.div>
 
@@ -108,38 +116,44 @@ export const ProjectsEmptyState = () => {
                   Create Project
                 </Button>
               </DialogTrigger>
-              
+
               <DialogContent className="backdrop-blur-xl bg-glass/95 border-glass-border max-w-2xl">
                 <DialogHeader>
                   <DialogTitle className="text-xl font-display font-bold">
                     Create New Project
                   </DialogTitle>
                 </DialogHeader>
-                
+
                 <Tabs defaultValue="github" className="mt-4">
                   <TabsList className="grid w-full grid-cols-2 bg-glass/50">
-                    <TabsTrigger 
-                      value="github" 
+                    <TabsTrigger
+                      value="github"
                       className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                     >
                       <Github className="w-4 h-4" />
                       GitHub Repo
                     </TabsTrigger>
-                    <TabsTrigger 
-                      value="manual" 
+                    <TabsTrigger
+                      value="manual"
                       className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                     >
                       <LinkIcon className="w-4 h-4" />
                       Manual URL
                     </TabsTrigger>
                   </TabsList>
-                  
+
                   <TabsContent value="github" className="mt-6">
-                    <NewProjectForm type="github" onSuccess={handleProjectCreated} />
+                    <NewProjectForm
+                      type="github"
+                      onSuccess={handleProjectCreated}
+                    />
                   </TabsContent>
-                  
+
                   <TabsContent value="manual" className="mt-6">
-                    <NewProjectForm type="manual" onSuccess={handleProjectCreated} />
+                    <NewProjectForm
+                      type="manual"
+                      onSuccess={handleProjectCreated}
+                    />
                   </TabsContent>
                 </Tabs>
               </DialogContent>

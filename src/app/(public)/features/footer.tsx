@@ -1,5 +1,3 @@
-"use client";
-
 import { Zap, Github, Twitter, Linkedin } from "lucide-react";
 
 const navigation = {
@@ -46,10 +44,10 @@ export function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary">
                 <Zap className="h-4 w-4 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold font-display">DeployVPS</span>
+              <span className="text-xl font-bold font-display">Shipstra</span>
             </div>
             <p className="text-muted-foreground leading-relaxed max-w-md">
-              Deploy to your own VPS with the simplicity of modern platforms. 
+              Deploy to your own VPS with the simplicity of modern platforms.
               Your infrastructure, your control, zero vendor lock-in.
             </p>
             <div className="flex space-x-4">
@@ -72,7 +70,10 @@ export function Footer() {
             <ul className="space-y-3">
               {navigation.product.map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                  <a
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
                     {item.name}
                   </a>
                 </li>
@@ -85,7 +86,10 @@ export function Footer() {
             <ul className="space-y-3">
               {navigation.support.map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                  <a
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
                     {item.name}
                   </a>
                 </li>
@@ -98,7 +102,10 @@ export function Footer() {
             <ul className="space-y-3">
               {navigation.company.map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                  <a
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
                     {item.name}
                   </a>
                 </li>
@@ -110,13 +117,13 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="py-8 border-t border-glass-border flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
-            © 2024 DeployVPS. All rights reserved.
+            © 2024 Shipstra. All rights reserved.
           </p>
           <div className="flex gap-6">
             {navigation.legal.map((item) => (
-              <a 
+              <a
                 key={item.name}
-                href={item.href} 
+                href={item.href}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm"
               >
                 {item.name}

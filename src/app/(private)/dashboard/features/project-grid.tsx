@@ -1,6 +1,16 @@
-import React from 'react';
+"use client";
+
+import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, GitBranch, Clock, MoreVertical, Play, Settings, Trash2 } from "lucide-react";
+import {
+  ExternalLink,
+  GitBranch,
+  Clock,
+  MoreVertical,
+  Play,
+  Settings,
+  Trash2,
+} from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,29 +18,50 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Project } from "@/hooks/use-projects";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 interface ProjectGridProps {
   projects: Project[];
 }
 
 const statusConfig = {
-  pending: { color: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20', label: 'Pending' },
-  building: { color: 'bg-blue-500/10 text-blue-600 border-blue-500/20', label: 'Building' },
-  deployed: { color: 'bg-green-500/10 text-green-600 border-green-500/20', label: 'Deployed' },
-  failed: { color: 'bg-red-500/10 text-red-600 border-red-500/20', label: 'Failed' },
-  inactive: { color: 'bg-gray-500/10 text-gray-600 border-gray-500/20', label: 'Inactive' },
+  pending: {
+    color: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
+    label: "Pending",
+  },
+  building: {
+    color: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+    label: "Building",
+  },
+  deployed: {
+    color: "bg-green-500/10 text-green-600 border-green-500/20",
+    label: "Deployed",
+  },
+  failed: {
+    color: "bg-red-500/10 text-red-600 border-red-500/20",
+    label: "Failed",
+  },
+  inactive: {
+    color: "bg-gray-500/10 text-gray-600 border-gray-500/20",
+    label: "Inactive",
+  },
 };
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) => {
   const status = statusConfig[project.status];
-  const router = useRouter()
+  const router = useRouter();
 
   const handleCardClick = () => {
-    console.log('🔍 Navigating to project:', project.id);
+    console.log("🔍 Navigating to project:", project.id);
     router.push(`/project/${project.id}`);
   };
 
@@ -41,14 +72,14 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   const handleVisitClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click when visit button is clicked
   };
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
     >
-      <Card 
+      <Card
         className="bg-glass/60 backdrop-blur-sm border-glass-border shadow-glass hover:shadow-glow transition-all duration-300 group cursor-pointer hover:scale-[1.02]"
         onClick={handleCardClick}
       >
@@ -66,16 +97,19 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
                   onClick={handleDropdownClick}
                 >
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-glass/95 backdrop-blur-sm border-glass-border">
+              <DropdownMenuContent
+                align="end"
+                className="bg-glass/95 backdrop-blur-sm border-glass-border"
+              >
                 <DropdownMenuItem>
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
@@ -92,16 +126,14 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             </DropdownMenu>
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
-            <Badge className={`${status.color} border`}>
-              {status.label}
-            </Badge>
+            <Badge className={`${status.color} border`}>{status.label}</Badge>
             {project.domain && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className="h-6 p-1 text-xs hover:text-primary"
                 onClick={handleVisitClick}
               >
@@ -110,17 +142,17 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
               </Button>
             )}
           </div>
-          
+
           <div className="space-y-2">
             {project.repository_url && (
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <GitBranch className="h-3 w-3" />
                 <span className="truncate">
-                  {project.repository_url.replace('https://github.com/', '')}
+                  {project.repository_url.replace("https://github.com/", "")}
                 </span>
               </div>
             )}
-            
+
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="h-3 w-3" />
               <span>

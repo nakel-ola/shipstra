@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Users, ChevronRight, Plus, Settings2 } from "lucide-react";

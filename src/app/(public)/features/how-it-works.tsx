@@ -1,5 +1,3 @@
-"use client";
-
 import { Card } from "@/components/ui/card";
 import { Github, Server, Rocket, ArrowRight } from "lucide-react";
 

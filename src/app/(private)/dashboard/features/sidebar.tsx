@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
@@ -149,7 +150,7 @@ export const Sidebar = () => {
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                DeployVPS
+                Shipstra
               </motion.span>
             )}
           </div>

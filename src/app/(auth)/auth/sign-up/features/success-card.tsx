@@ -65,7 +65,7 @@ export const SuccessCard = () => {
               Account Created Successfully!
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              Welcome to DeployVPS! Your account has been created and a
+              Welcome to Shipstra! Your account has been created and a
               verification email has been sent.
             </p>
           </motion.div>

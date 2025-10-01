@@ -1,12 +1,10 @@
-"use client";
-
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const testimonials = [
   {
     content:
-      "DeployVPS transformed our deployment process. We went from 30-minute deployments to 30 seconds, all on our own infrastructure.",
+      "Shipstra transformed our deployment process. We went from 30-minute deployments to 30 seconds, all on our own infrastructure.",
     author: "Sarah Chen",
     role: "CTO at TechFlow",
     avatar: "/placeholder.svg",
