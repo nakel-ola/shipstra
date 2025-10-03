@@ -1,27 +1,16 @@
-import { createServerClient as createSSRClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
-import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./env";
+import { SUPABASE_SERVICE_ROLE_KEY, SUPABASE_URL } from "./env";
 import { Database } from "./types";
+import { createClient } from "@supabase/supabase-js";
 
-export async function createServerClient() {
-  const cookieStore = await cookies();
+export const createAdminClient = () => {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error("Missing required Supabase environment variables");
+  }
 
-  return createSSRClient<Database>(SUPABASE_URL!, SUPABASE_PUBLISHABLE_KEY!, {
-    cookies: {
-      getAll() {
-        return cookieStore.getAll();
-      },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          );
-        } catch {
-          // The `setAll` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing
-          // user sessions.
-        }
-      },
+  return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
     },
   });
-}
+};

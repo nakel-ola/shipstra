@@ -434,6 +434,8 @@ export type Database = {
           github_encrypted_token: string | null
           github_username: string | null
           github_token_updated_at: string | null
+          github_app_installation_id?: string | null
+          github_app_installation_id_updated_at?: string | null
           id: string
           two_factor_enabled: boolean | null
           two_factor_secret: string | null
@@ -446,6 +448,8 @@ export type Database = {
           github_encrypted_token?: string | null
           github_username?: string | null
           github_token_updated_at?: string | null
+          github_app_installation_id?: string | null
+          github_app_installation_id_updated_at?: string | null
           id?: string
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
@@ -458,6 +462,8 @@ export type Database = {
           github_encrypted_token?: string | null
           github_username?: string | null
           github_token_updated_at?: string | null
+          github_app_installation_id?: string | null
+          github_app_installation_id_updated_at?: string | null
           id?: string
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null

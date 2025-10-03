@@ -3,6 +3,7 @@ import { createGitHubAPI } from "@/lib/github-api";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "@/integrations/supabase/types";
 import { SUPABASE_URL } from "@/integrations/supabase/env";
+import { createAdminClient } from "@/integrations/supabase/server";
 
 // Simple encryption/decryption using base64 (replace with proper encryption in production)
 const encryptToken = (token: string): string => {
@@ -11,32 +12,6 @@ const encryptToken = (token: string): string => {
 
 const decryptToken = (encryptedToken: string): string => {
   return Buffer.from(encryptedToken, "base64").toString("utf-8");
-};
-
-// Create admin client with service role key (bypasses RLS)
-const createAdminClient = () => {
-  const supabaseUrl = SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl) {
-    throw new Error("Missing SUPABASE_URL environment variable");
-  }
-
-  if (!serviceRoleKey) {
-    console.warn(
-      "SUPABASE_SERVICE_ROLE_KEY not found. Please add it to .env.local for full functionality."
-    );
-    throw new Error(
-      "SUPABASE_SERVICE_ROLE_KEY is required for GitHub token storage. Please add it to your .env.local file."
-    );
-  }
-
-  return createClient<Database>(supabaseUrl, serviceRoleKey, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  });
 };
 
 export async function GET(request: NextRequest) {

@@ -1,25 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FolderOpen, Plus, Github, Link as LinkIcon } from "lucide-react";
+import { FolderOpen, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { NewProjectForm } from "./new-project-form";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const ProjectsEmptyState = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const router = useRouter();
 
-  const handleProjectCreated = () => {
-    setIsDialogOpen(false);
+  const handleCreateProject = () => {
+    router.push('/create-project');
   };
 
   return (
@@ -106,58 +97,14 @@ export const ProjectsEmptyState = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  size="lg"
-                  className="bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 group"
-                >
-                  <Plus className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform" />
-                  Create Project
-                </Button>
-              </DialogTrigger>
-
-              <DialogContent className="backdrop-blur-xl bg-glass/95 border-glass-border max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-display font-bold">
-                    Create New Project
-                  </DialogTitle>
-                </DialogHeader>
-
-                <Tabs defaultValue="github" className="mt-4">
-                  <TabsList className="grid w-full grid-cols-2 bg-glass/50">
-                    <TabsTrigger
-                      value="github"
-                      className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                    >
-                      <Github className="w-4 h-4" />
-                      GitHub Repo
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="manual"
-                      className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                    >
-                      <LinkIcon className="w-4 h-4" />
-                      Manual URL
-                    </TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="github" className="mt-6">
-                    <NewProjectForm
-                      type="github"
-                      onSuccess={handleProjectCreated}
-                    />
-                  </TabsContent>
-
-                  <TabsContent value="manual" className="mt-6">
-                    <NewProjectForm
-                      type="manual"
-                      onSuccess={handleProjectCreated}
-                    />
-                  </TabsContent>
-                </Tabs>
-              </DialogContent>
-            </Dialog>
+            <Button
+              size="lg"
+              onClick={handleCreateProject}
+              className="bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 group"
+            >
+              <Plus className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform" />
+              Create Project
+            </Button>
           </motion.div>
 
           {/* Quick stats */}
