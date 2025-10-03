@@ -431,6 +431,9 @@ export type Database = {
         Row: {
           backup_codes: string[] | null
           created_at: string | null
+          github_encrypted_token: string | null
+          github_username: string | null
+          github_token_updated_at: string | null
           id: string
           two_factor_enabled: boolean | null
           two_factor_secret: string | null
@@ -440,6 +443,9 @@ export type Database = {
         Insert: {
           backup_codes?: string[] | null
           created_at?: string | null
+          github_encrypted_token?: string | null
+          github_username?: string | null
+          github_token_updated_at?: string | null
           id?: string
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
@@ -449,6 +455,9 @@ export type Database = {
         Update: {
           backup_codes?: string[] | null
           created_at?: string | null
+          github_encrypted_token?: string | null
+          github_username?: string | null
+          github_token_updated_at?: string | null
           id?: string
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null

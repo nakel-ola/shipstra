@@ -4,8 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { User, Building2, Shield, ChevronRight } from "lucide-react";
+import { User, Building2, Shield, ChevronRight, Github } from "lucide-react";
 import { ProfileTab, OrganizationTab, SecurityTab } from "./features";
+import { GitHubSettings } from "@/components/github/github-settings";
 
 export default function ProfileSettings() {
   const [activeTab, setActiveTab] = useState("profile");
@@ -28,6 +29,12 @@ export default function ProfileSettings() {
       label: "Security",
       icon: Shield,
       description: "Configure security settings and authentication",
+    },
+    {
+      id: "integrations",
+      label: "Integrations",
+      icon: Github,
+      description: "Connect external services and manage integrations",
     },
   ];
 
@@ -71,7 +78,7 @@ export default function ProfileSettings() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
           <Tabs
             value={activeTab}
@@ -79,7 +86,7 @@ export default function ProfileSettings() {
             className="w-full"
           >
             {/* Tab Navigation */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -98,7 +105,7 @@ export default function ProfileSettings() {
                       }`}
                       onClick={() => setActiveTab(tab.id)}
                     >
-                      <CardContent className="p-6">
+                      <CardContent className="p-3">
                         <div className="flex items-center gap-4">
                           <div
                             className={`w-10 h-10 rounded-lg flex items-center justify-center ${
@@ -125,9 +132,6 @@ export default function ProfileSettings() {
                               {tab.description}
                             </p>
                           </div>
-                          {isActive && (
-                            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                          )}
                         </div>
                       </CardContent>
                     </Card>
@@ -165,6 +169,16 @@ export default function ProfileSettings() {
                   transition={{ duration: 0.4 }}
                 >
                   <SecurityTab />
+                </motion.div>
+              </TabsContent>
+
+              <TabsContent value="integrations" className="m-0">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <GitHubSettings />
                 </motion.div>
               </TabsContent>
             </div>

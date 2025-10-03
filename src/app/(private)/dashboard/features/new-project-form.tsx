@@ -5,9 +5,16 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Github, Link as LinkIcon, Loader2 } from "lucide-react";
+import { Github, Link as LinkIcon, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Form,
   FormControl,
@@ -19,9 +26,11 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useProjects } from "@/hooks/use-projects";
+import { useGitHubRepos } from "@/hooks/use-github-repos";
+import { GitHubConnectModal } from "@/components/github/github-connect-modal";
 
 const githubSchema = z.object({
-  repositoryUrl: z.string().url("Please enter a valid GitHub repository URL"),
+  repository: z.string().min(1, "Please select a GitHub repository"),
   projectName: z.string().min(1, "Project name is required"),
   buildCommand: z.string().optional(),
   outputDirectory: z.string().optional(),
@@ -44,17 +53,25 @@ interface NewProjectFormProps {
 
 export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showGitHubConnect, setShowGitHubConnect] = useState(false);
   const { toast } = useToast();
   const { createProject } = useProjects();
 
   const schema = type === "github" ? githubSchema : manualSchema;
 
+  const {
+    repositories,
+    isLoading: isLoadingRepos,
+    isConnected,
+    refreshAll,
+  } = useGitHubRepos();
+
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       projectName: "",
-      repositoryUrl: "",
-      sourceUrl: "",
+      repository: type === "github" ? "" : undefined,
+      sourceUrl: type === "manual" ? "" : undefined,
       buildCommand: "npm run build",
       outputDirectory: "dist",
     },
@@ -64,12 +81,21 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
     setIsLoading(true);
 
     try {
+      let repositoryUrl: string | undefined;
+
+      if (type === "github") {
+        const gitHubData = data as GitHubFormData;
+        const selectedRepo = repositories.find(
+          (repo) => repo.full_name === gitHubData.repository
+        );
+        repositoryUrl = selectedRepo?.html_url;
+      } else {
+        repositoryUrl = undefined;
+      }
+
       const projectInput = {
         name: data.projectName,
-        repositoryUrl:
-          type === "github"
-            ? (data as GitHubFormData).repositoryUrl
-            : undefined,
+        repositoryUrl,
         sourceUrl:
           type === "manual" ? (data as ManualFormData).sourceUrl : undefined,
         buildCommand: data.buildCommand,
@@ -82,7 +108,7 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
         form.reset();
         onSuccess?.();
       }
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
         title: "Failed to create project",
@@ -149,26 +175,84 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
           {/* Repository/Source URL */}
           <FormField
             control={form.control}
-            name={type === "github" ? "repositoryUrl" : "sourceUrl"}
+            name={type === "github" ? "repository" : "sourceUrl"}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
                   {type === "github" ? "GitHub Repository" : "Source URL"}
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder={
-                      type === "github"
-                        ? "https://github.com/username/repository"
-                        : "https://github.com/username/repository.git"
-                    }
-                    className="bg-glass/50 border-glass-border focus:border-primary focus:shadow-[0_0_20px_hsl(var(--primary)/0.3)] transition-all duration-300"
-                    {...field}
-                  />
+                  {type === "github" ? (
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      disabled={isLoading || isLoadingRepos}
+                    >
+                      <SelectTrigger className="bg-glass/50 border-glass-border focus:border-primary focus:shadow-[0_0_20px_hsl(var(--primary)/0.3)] transition-all duration-300">
+                        <SelectValue
+                          placeholder={
+                            !isConnected
+                              ? "Connect GitHub account first"
+                              : isLoadingRepos
+                              ? "Loading repositories..."
+                              : "Select a repository"
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {!isConnected ? (
+                          <div className="p-4 space-y-3">
+                            <div className="flex items-center justify-center text-muted-foreground">
+                              <AlertCircle className="w-4 h-4 mr-2" />
+                              GitHub account not connected
+                            </div>
+                            <Button
+                              onClick={() => setShowGitHubConnect(true)}
+                              size="sm"
+                              className="w-full bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300"
+                            >
+                              <Github className="w-4 h-4 mr-2" />
+                              Connect GitHub Account
+                            </Button>
+                          </div>
+                        ) : repositories.length === 0 ? (
+                          <div className="flex items-center justify-center py-4 text-muted-foreground">
+                            No repositories found
+                          </div>
+                        ) : (
+                          repositories.map((repo) => (
+                            <SelectItem key={repo.id} value={repo.full_name}>
+                              <div className="flex items-center space-x-2">
+                                <span className="font-medium">{repo.name}</span>
+                                {repo.private && (
+                                  <span className="text-xs bg-yellow-100 text-yellow-800 px-1 rounded">
+                                    Private
+                                  </span>
+                                )}
+                              </div>
+                              {repo.description && (
+                                <div className="text-xs text-muted-foreground truncate max-w-xs">
+                                  {repo.description}
+                                </div>
+                              )}
+                            </SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Input
+                      placeholder="https://github.com/username/repository.git"
+                      className="bg-glass/50 border-glass-border focus:border-primary focus:shadow-[0_0_20px_hsl(var(--primary)/0.3)] transition-all duration-300"
+                      {...field}
+                    />
+                  )}
                 </FormControl>
                 <FormDescription>
                   {type === "github"
-                    ? "The GitHub repository URL to deploy from."
+                    ? isConnected
+                      ? "Select a repository from your GitHub account to deploy."
+                      : "Connect your GitHub account in settings to access your repositories."
                     : "Public Git repository or archive URL to deploy from."}
                 </FormDescription>
                 <FormMessage />
@@ -243,6 +327,18 @@ export const NewProjectForm = ({ type, onSuccess }: NewProjectFormProps) => {
           </div>
         </form>
       </Form>
+
+      <GitHubConnectModal
+        open={showGitHubConnect}
+        onOpenChange={setShowGitHubConnect}
+        onSuccess={async () => {
+          await refreshAll();
+          toast({
+            title: "GitHub Connected",
+            description: "You can now select from your GitHub repositories.",
+          });
+        }}
+      />
     </motion.div>
   );
 };
